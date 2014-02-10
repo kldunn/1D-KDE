@@ -1,0 +1,14 @@
+Package: 1D-KDE 
+Type: Package
+Title: Kernel Density Estimator for Approximating 1D Probability Distributions
+Version: 1.00
+Date: 2011-05-10
+Author: Kerry Dunn <klhaney@wisc.edu>
+Maintainer: Kerry Dunn <klhaney@wisc.edu>
+Description:
+  This package contains a set of functions that allow the user to use
+  kernel density estimation techniques to approximate a 1D probability distribution
+  based on some input data.
+License: GPL (>= 2)
+LazyLoad: yes
+LazyData: yes
