@@ -1,6 +1,6 @@
-\name{1D-KDE-package}
-\alias{1D-KDE-package}
-\alias{1D-KDE}
+\name{KDE.1D-package}
+\alias{KDE.1D-package}
+\alias{KDE.1D}
 \docType{package}
 \title{Kernel Density Estimator for Approximating 1D Probability Distributions}
 \description{
@@ -10,7 +10,7 @@
 }
 \details{
 \tabular{ll}{
-Package: \tab 1D-KDE\cr
+Package: \tab KDE.1D\cr
 Type: \tab Package\cr
 Version: \tab 1.00\cr
 Date: \tab 2011-05-10\cr
