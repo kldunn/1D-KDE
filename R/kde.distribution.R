@@ -5,10 +5,10 @@ kde.distribution <- function(kernel, x, xi, hi, lbound = FALSE, rbound = FALSE)
     m = length(x)       # number of calculation points in the domain
     fx = c(rep(0,m))    # initialize fx with zeroes
 
-    # sort the vector x and get the min/max values of the domain
-    x = sort(x)
-    xmin = x[1]
-    xmax = x[length(x)]
+    # sort the vector x to get the min/max values of the domain
+    x_sorted = sort(x)
+    xmin = x_sorted[1]
+    xmax = x_sorted[length(x_sorted)]
 
     # define interior domain point boundaries if using global bandwidth
     # (interval of points that do not require a boundary correction)
@@ -22,8 +22,8 @@ kde.distribution <- function(kernel, x, xi, hi, lbound = FALSE, rbound = FALSE)
     # compute the sum over observations xi for each of the x values
     for (i in 1:N)
     {
-        # modify bandwidth and boundaries if using region bandwidth
-        if (H > 1)
+        # modify bandwidth if using regional bandwidth @ observations
+        if (H == N)
         {
             h = hi[i]
             xleft = xmin + h
@@ -33,6 +33,14 @@ kde.distribution <- function(kernel, x, xi, hi, lbound = FALSE, rbound = FALSE)
         # iterate over the x values
         for (j in 1:m)
         {  
+            # modify bandwidth if using regional bandwidth @ calculation points
+            if (H == m)
+            {
+                h = hi[j]
+                xleft = xmin + h
+                xright = xmax - h
+            }
+
             u = (x[j] - xi[i]) / h           
 
             # evaluate kernel only if u is in the interval [-1,1]

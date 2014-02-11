@@ -8,7 +8,7 @@
 \usage{kde.distribution(kernel, x, xi, hi, lbound = FALSE, rbound = FALSE)}
 \arguments{
   \item{kernel}{any kernel function k(u)}
-  \item{x}{vector of values representing the function's domain}
+  \item{x}{vector of calculation points representing the function's domain}
   \item{xi}{sample of N observations from the unknown distribution}
   \item{hi}{bandwidth value(s)}
   \item{lbound}{set to TRUE if unknown pdf is bounded on the left}
@@ -21,7 +21,7 @@
 }
 \value{
   A vector containing the estimated probability distribution f(x)
-  evaluated at the user-provided domain values x.
+  evaluated at the user-provided calculation points x.
 }
 \references{
   K. Banerjee, "Kernel Density Estimator Methods for Monte Carlo
@@ -30,11 +30,15 @@
 }
 \author{Kerry Dunn, UW-Madison Nuclear Engineering PhD Student}
 \note{
-  This function will accept both a global bandwidth and a region based
-  bandwidth.  To use a global bandwidth, hi must be of length 1.  If hi
-  is greater than length 1 it will be assumed that it is of the same
-  length as xi and represents region based bandwidths (i.e. each point
-  xi is defined by its own bandwidth hi).
+  This function will accept both a global bandwidth and a regional bandwidth.
+  To use a global bandwidth, hi must be of length 1.  If hi is equal to the
+  number of observations xi, then a regional bandwidth based on xi will be used
+  (i.e., each point xi is defined by its own bandwidth hi).  If hi is equal to
+  the number of calculation points x, then a regional bandwidth based on x will
+  be used (i.e., each point xj is defined by its own bandwidth hj).\cr\cr
+  If hi is equal to both the number of observations xi and the number of
+  calculation points x, then a regional bandwidth based on x will be used.  This
+  should rarely occur, since xi is typically much greater than x. 
 }
 \examples{
 par(mfcol=c(2,2))

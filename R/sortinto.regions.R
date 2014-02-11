@@ -1,6 +1,13 @@
-sortinto.regions <- function(x,b)
+sortinto.regions <- function(x, b, finite = FALSE)
 {
-    m = length(b)+1   # number of distinct regions
+    # determine number of distinct regions (infinite domain is default)
+    m = length(b) + 1
+
+    if (finite)
+    {
+        m = length(b) - 1
+    }
+
     tol = 1e-10       # tolerance to account for truncation errors
 
     # set up an empty list of m regions
@@ -14,55 +21,54 @@ sortinto.regions <- function(x,b)
     {
         values = NULL  # default assumes no x values in region r
 
-        if (r == 1)
+        if (r == m)
         {
-            # first region
-            i = which(x < b[1])
-
-            if (length(i) != 0)
+            # get all values in last region
+            if (finite)
             {
-                values = x[i]
+                values = x[which(x <= b[m+1] + tol)]
+                values = values[which(values >= b[m] - tol)]
+            }
+            else  # infinite
+            {
+                values = x[which(x >= b[m-1] - tol)]
             }
         }
-        else if (r == m)
+        else if (r == 1)
         {
-            # last region
-            i = which(x >= b[m-1] - tol)
-
-            if (length(i) != 0)
+            # get all values in first region
+            if (finite)
             {
-                values = x[i]
+                values = x[which(x < b[2])]
+                values = values[which(values >= b[1] - tol)]
+            }
+            else  # infinite
+            {
+                values = x[which(x < b[1])]
             }
         }
-        else # interior region
+        else  # interior region
         {
-            # get all x that are less than the right boundary
-            i = which(x < b[r])
-
-            if (length(i) != 0)
+            # get all values in the rth interior region
+            if (finite)
             {
-                values = x[i]
+                values = x[which(x < b[r+1])]
+                values = values[which(values >= b[r] - tol)]
             }
-
-            # get all x that are greater than or equal to the left boundary
-            if (!is.null(values))
+            else  # infinite
             {
-                i = which(values >= b[r-1] - tol)
-
-                if (length(i) != 0)
-                {
-                    values = values[i]
-                }
-                else
-                {
-                    values = NULL
-                }
+                values = x[which(x < b[r])]
+                values = values[which(values >= b[r-1] - tol)]
             }
         }
 
-        if (!is.null(values))
+        if (length(values) != 0)
         {
             regions[[r]] = values
+        }
+        else
+        {
+            regions[[r]] = NULL
         }
     }
 
